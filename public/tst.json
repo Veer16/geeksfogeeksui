@@ -1,0 +1,17 @@
+[
+  {
+    "restaurant": {
+      "name": "Hello"
+    }
+  },
+  {
+    "restaurant": {
+      "name": "World"
+    }
+  },
+  {
+    "restaurant": {
+      "name": "Foo"
+    }
+  }
+]
