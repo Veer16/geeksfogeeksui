@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
 import { AppState } from "./AppState";
 import { IStatusizedUser, IUser } from "./UsersReducer";
-import "./App.css";
 
 export default function ReduxBasics() {
   const dispatch = useDispatch(); //This hook is like an insert query
@@ -21,7 +21,7 @@ export default function ReduxBasics() {
     // Before running the api we insert the intial value
     dispatch({ type: "started" });
     api();
-  }, []);
+  }, [dispatch]);
   // select column
   if (statusizedUser.loading) {
     return <div>It is Loading</div>;
@@ -35,7 +35,7 @@ export default function ReduxBasics() {
   function renderUser(user: IUser): JSX.Element {
     return (
       <div className="grid-item" key={user.id}>
-        <img src={user.avatar} />
+        <img src={user.avatar} alt="User Avatar" />
         <div>{user.email}</div>
         <div>{`${user.first_name}${user.last_name}`}</div>
       </div>

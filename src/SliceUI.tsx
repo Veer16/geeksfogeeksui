@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "./AppState";
 // import { IStatusizedUser, IUser } from "./UsersReducer";
-import { IUser, completed, started } from "./UsersSlice";
+import { completed, IUser, started } from "./UsersSlice";
 
 export default function SliceUI() {
   const dispatch = useDispatch(); //insert query
@@ -18,7 +18,7 @@ export default function SliceUI() {
     // insert
     dispatch(started());
     api();
-  }, []);
+  }, [dispatch]);
   // select column
   return (
     <div className="grid-container">
@@ -30,7 +30,7 @@ export default function SliceUI() {
 function renderUser(user: IUser): JSX.Element {
   return (
     <div className="grid-item" key={user.id}>
-      <img src={user.avatar} />
+      <img src={user.avatar} alt="User Avatar" />
       <div>{user.email}</div>
       <div>{`${user.first_name}${user.last_name}`}</div>
     </div>

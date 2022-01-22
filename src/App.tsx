@@ -1,22 +1,21 @@
-import logo from "./logo.svg";
+import { Route } from "react-router-dom";
 import "./App.css";
 import ComponentA from "./ComponentA";
-import { Route } from "react-router-dom";
 import ComponentB from "./ComponentB";
 import ComponentC from "./ComponentC";
-import MainClass from "./MainClass";
-import UsersClass from "./UsersClass";
-import Hooks from "./Hooks";
 import ComponentDidMount from "./ComponentDidMount";
 import ComponentDidUpdate from "./ComponentDidUpdate";
-import ReduxBasics from "./ReduxBasics";
-import WebsiteReducerUI from "./WebsiteReducerUI";
-import HotelsUI from "./HotelsUI";
-import SliceUI from "./SliceUI";
+import Hooks from "./Hooks";
 import HooksUI from "./HooksUI";
-import SignUp from "./SignUp";
+import HotelsUI from "./HotelsUI";
 import Login from "./Login";
+import MainClass from "./MainClass";
 import Profile from "./Profile";
+import ReduxBasics from "./ReduxBasics";
+import SignUp from "./SignUp";
+import SliceUI from "./SliceUI";
+import UsersClass from "./UsersClass";
+import WebsiteReducerUI from "./WebsiteReducerUI";
 function App() {
   return (
     <switch>

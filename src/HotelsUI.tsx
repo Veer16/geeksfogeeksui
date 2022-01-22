@@ -1,7 +1,3 @@
-import { useContext, useEffect } from "react";
-import { completed, started, IHotel } from "./HotelsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "./AppState";
 import {
   AppBar,
   Button,
@@ -10,15 +6,15 @@ import {
   InputBase,
   makeStyles,
   Theme,
-  Toolbar,
-  Typography,
 } from "@material-ui/core";
-import HotelCard from "./HotelCard";
-import { Search } from "@material-ui/icons";
 import SearchIcon from "@material-ui/icons/Search";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { AppState } from "./AppState";
+import HotelCard from "./HotelCard";
+import { completed, IHotel, started } from "./HotelsSlice";
 import { UserContext } from "./UserProvider";
-import { useState } from "react";
 
 const useStyles = makeStyles<Theme, {}>({
   rootContainer: {
@@ -70,7 +66,7 @@ export default function HotelsUI() {
     }
     dispatch(started());
     api();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

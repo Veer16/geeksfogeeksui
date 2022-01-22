@@ -1,6 +1,5 @@
-import { createContext, useEffect, useState } from "react";
 import firebase from "firebase";
-import { create } from "cypress/types/lodash";
+import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext<firebase.User | null>(null);
 
@@ -9,12 +8,12 @@ interface IProp {
 }
 export default function UserProvider(props: IProp) {
   const [user, setUser] = useState<firebase.User | null>(null);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  // const [isLoading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     firebase.auth().onAuthStateChanged((firebaseUser) => {
-      setLoading(true);
+      // setLoading(true);
       setUser(firebaseUser);
-      setLoading(false);
+      // setLoading(false);
     });
   }, []);
   return (

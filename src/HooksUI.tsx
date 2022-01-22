@@ -1,4 +1,3 @@
-import { reset } from "cypress/types/sinon";
 import { useForm } from "react-hook-form";
 interface IForm {
   name: string;

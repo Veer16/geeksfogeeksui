@@ -21,7 +21,7 @@ export default function ComponentDidMount() {
       setLoading(false);
     }
     api();
-  }, []);
+  }, [user]);
   if (isLoading) {
     return <div>It is Loading</div>;
   } else {
@@ -30,7 +30,7 @@ export default function ComponentDidMount() {
   function renderUser(user: IUser): JSX.Element {
     return (
       <div className="grid-item" key={user.id}>
-        <img src={user.avatar} />
+        <img src={user.avatar} alt="User Avatar" />
         <div>{user.email}</div>
         <div>{`${user.first_name}${user.last_name}`}</div>
       </div>
