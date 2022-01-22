@@ -36,7 +36,7 @@ export default function Profile() {
     <div className={styles.container}>
       <div className={styles.innerDiv}>
         <Typography variant="h3" className={styles.title}>
-          Welcome to the Profile Page
+          Welcome to the CHANGED 🍔 Profile Page
         </Typography>
 
         {context?.email && (
