@@ -58,7 +58,7 @@ export default function Authentication(props: IProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<IAuthentication>();
-  const history = useHistory();
+  // const history = useHistory();
 
   return (
     <div className={styles.outerDiv}>
