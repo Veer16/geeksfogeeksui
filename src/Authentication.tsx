@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import FormButtons, { IButtonItem } from "./FormButtons";
-// import FormButtons from "./FormButtons";
+import LoadingSpinner from "./LoadingSpinner";
 
 const useStyles = makeStyles<Theme, IProps>({
   container: {
@@ -12,29 +12,38 @@ const useStyles = makeStyles<Theme, IProps>({
     justifyContent: "space-evenly",
     height: (props) => props.height - 60 + "px",
   },
-  buttons: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
+
   outerDiv: {
-    display: "flex",
     alignItems: "center",
+    display: "flex",
     justifyContent: "center",
     height: "100%",
   },
+
   innerDiv: {
     width: "80%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
-    height: "300px",
+    height: (props) => props.height + "px",
   },
+
   title: {
     textAlign: "center",
   },
+
+  buttons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+
   buttonItem: {
     margin: "0 10px",
+  },
+
+  errorMessage: {
+    color: "red",
   },
 });
 
@@ -43,6 +52,7 @@ export interface IAuthetication {
   email: string;
   password: string;
 }
+
 interface IProps {
   isUserNameVisible: boolean;
   title: string;
@@ -50,6 +60,7 @@ interface IProps {
   tertiary: IButtonItem;
   onSubmit: (data: IAuthetication) => void;
 }
+
 export default function Authentication(props: IProps) {
   const styles = useStyles(props);
   const {
@@ -73,18 +84,13 @@ export default function Authentication(props: IProps) {
       setErrorMessage(e.message);
     }
   };
-
   return (
     <div className={styles.outerDiv}>
       <div className={styles.innerDiv}>
         <Typography variant="h3" className={styles.title}>
           {props.title}
         </Typography>
-
-        <form
-          className={styles.container}
-          onSubmit={handleSubmit(props.onSubmit)}
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
           {props.isUserNameVisible && (
             <TextField
               {...register("userName", {
@@ -92,50 +98,50 @@ export default function Authentication(props: IProps) {
                 minLength: { value: 4, message: "4 is min length" },
               })}
               variant="outlined"
-              label="User Name"
-              placeholder="User Name"
+              label="User name"
+              placeholder="User name"
               required={true}
               error={errors && errors.userName?.message ? true : false}
               helperText={errors.userName?.message}
-              id="username"
+              id="userName"
             />
           )}
           <TextField
             type="email"
             {...register("email", {
+              required: true,
               minLength: { value: 4, message: "4 is min length" },
               pattern: {
                 value: /\w+@\w+\.\w+/,
-                message: "Email regex not matched",
+                message: "email regex not matched",
               },
             })}
             variant="outlined"
-            label="Email Address"
-            placeholder="Email Address"
+            label="Email address"
+            placeholder="Email address"
             required={true}
             error={errors && errors.email?.message ? true : false}
             helperText={errors.email?.message}
             id="emailAddress"
           />
-
           <TextField
             type="password"
             {...register("password", {
               required: true,
-              minLength: { value: 4, message: "min length is 4" },
+              minLength: { value: 6, message: "min length is 6" },
             })}
             variant="outlined"
             label="Password"
             placeholder="Password"
-            required={true}
             error={errors && errors.password?.message ? true : false}
+            required={true}
             helperText={errors.password?.message}
             id="password"
           />
           <FormButtons
             primary={{
               label: "Submit",
-              onClick: () => onSubmit,
+              onClick: () => console.log("submit"),
             }}
             secondary={{
               label: "Reset",
@@ -143,7 +149,6 @@ export default function Authentication(props: IProps) {
             }}
             tertiary={props.tertiary}
           />
-
           {errorMessage && (
             <Typography
               variant="h4"
@@ -154,6 +159,7 @@ export default function Authentication(props: IProps) {
             </Typography>
           )}
         </form>
+        {isLoading && <LoadingSpinner />}
       </div>
     </div>
   );
