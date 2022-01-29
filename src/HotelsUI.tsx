@@ -58,15 +58,30 @@ export default function HotelsUI() {
   const hotels: IHotel[] = useSelector((x: AppState) => x.HotelsSlice);
   useEffect(() => {
     async function api() {
-      const response = await fetch("/hotel.json");
-      const json = await response.json();
-      dispatch(
-        completed(json.map((x: { restaurant: IHotel }) => x.restaurant))
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var graphql = JSON.stringify({
+        query: "{\n  hotels {\n    id, name, cuisines, featured_image\n  }\n}",
+        variables: {},
+      });
+      var requestOptions: RequestInit = {
+        method: "POST",
+        headers: myHeaders,
+        body: graphql,
+        redirect: "follow",
+      };
+
+      const response = await fetch(
+        "https://sleepy-lake-08072.herokuapp.com/graphql",
+        requestOptions
       );
+      const json: { data: { hotels: IHotel[] } } = await response.json();
+      dispatch(completed(json.data.hotels));
     }
     dispatch(started());
     api();
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -92,6 +107,7 @@ export default function HotelsUI() {
               <Button
                 className={styles.button}
                 onClick={() => history.push("/Profile")}
+                id="profileButton"
               >
                 Profile
               </Button>
@@ -100,6 +116,7 @@ export default function HotelsUI() {
               <Button
                 className={styles.button}
                 onClick={() => history.push("/SignUp")}
+                id="signUpButton"
               >
                 SignUp
               </Button>
@@ -108,6 +125,7 @@ export default function HotelsUI() {
               <Button
                 className={styles.button}
                 onClick={() => history.push("/Login")}
+                id="loginButton"
               >
                 Login
               </Button>

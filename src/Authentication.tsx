@@ -1,5 +1,7 @@
 import { makeStyles, TextField, Theme, Typography } from "@material-ui/core";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import FormButtons, { IButtonItem } from "./FormButtons";
 // import FormButtons from "./FormButtons";
 
@@ -36,18 +38,17 @@ const useStyles = makeStyles<Theme, IProps>({
   },
 });
 
-export interface IAuthentication {
+export interface IAuthetication {
   userName: string;
   email: string;
   password: string;
 }
-
 interface IProps {
   isUserNameVisible: boolean;
   title: string;
   height: number;
   tertiary: IButtonItem;
-  onSubmit: (data: IAuthentication) => void;
+  onSubmit: (data: IAuthetication) => void;
 }
 export default function Authentication(props: IProps) {
   const styles = useStyles(props);
@@ -56,8 +57,22 @@ export default function Authentication(props: IProps) {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<IAuthentication>();
-  // const history = useHistory();
+  } = useForm<IAuthetication>();
+  const history = useHistory();
+  const [isLoading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const onSubmit = async (data: IAuthetication) => {
+    try {
+      setLoading(true);
+      await props.onSubmit(data);
+      reset();
+      history.push("/");
+      setLoading(false);
+    } catch (e: any) {
+      setLoading(false);
+      setErrorMessage(e.message);
+    }
+  };
 
   return (
     <div className={styles.outerDiv}>
@@ -82,6 +97,7 @@ export default function Authentication(props: IProps) {
               required={true}
               error={errors && errors.userName?.message ? true : false}
               helperText={errors.userName?.message}
+              id="username"
             />
           )}
           <TextField
@@ -99,6 +115,7 @@ export default function Authentication(props: IProps) {
             required={true}
             error={errors && errors.email?.message ? true : false}
             helperText={errors.email?.message}
+            id="emailAddress"
           />
 
           <TextField
@@ -113,11 +130,12 @@ export default function Authentication(props: IProps) {
             required={true}
             error={errors && errors.password?.message ? true : false}
             helperText={errors.password?.message}
+            id="password"
           />
           <FormButtons
             primary={{
               label: "Submit",
-              onClick: () => console.log("submit"),
+              onClick: () => onSubmit,
             }}
             secondary={{
               label: "Reset",
@@ -125,6 +143,16 @@ export default function Authentication(props: IProps) {
             }}
             tertiary={props.tertiary}
           />
+
+          {errorMessage && (
+            <Typography
+              variant="h4"
+              className={styles.errorMessage}
+              id="errorMessage"
+            >
+              {errorMessage}
+            </Typography>
+          )}
         </form>
       </div>
     </div>

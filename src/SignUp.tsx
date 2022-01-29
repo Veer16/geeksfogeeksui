@@ -12,6 +12,7 @@ export default function SignUp() {
         .createUserWithEmailAndPassword(signUp.email, signUp.password);
       console.log(userData);
       await userData.user?.updateProfile({ displayName: signUp.userName });
+      history.push("/");
     } catch (e) {
       throw e;
     }

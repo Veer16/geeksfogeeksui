@@ -43,6 +43,7 @@ function App() {
       <Route exact path="/Login" component={Login} />
       <Route exact path="/SignUp" component={SignUp} />
       <Route exact path="/Profile" component={Profile} />
+      <Route exact path="/" component={HotelsUI} />
     </switch>
   );
 }
